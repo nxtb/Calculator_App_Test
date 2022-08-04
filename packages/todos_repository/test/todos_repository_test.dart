@@ -39,7 +39,6 @@ void main() {
       api = MockTodosApi();
       when(() => api.getTodos()).thenAnswer((_) => Stream.value(todos));
       when(() => api.saveTodo(any())).thenAnswer((_) async {});
-      when(() => api.deleteTodo(any())).thenAnswer((_) async {});
       when(
         () => api.clearCompleted(),
       ).thenAnswer((_) async => todos.where((todo) => todo.isCompleted).length);
@@ -92,16 +91,6 @@ void main() {
         expect(subject.saveTodo(newTodo), completes);
 
         verify(() => api.saveTodo(newTodo)).called(1);
-      });
-    });
-
-    group('deleteTodo', () {
-      test('makes correct api request', () {
-        final subject = createSubject();
-
-        expect(subject.deleteTodo(todos[0].id), completes);
-
-        verify(() => api.deleteTodo(todos[0].id)).called(1);
       });
     });
 

@@ -19,12 +19,6 @@ class TodosRepository {
   /// If a [todo] with the same id already exists, it will be replaced.
   Future<void> saveTodo(Todo todo) => _todosApi.saveTodo(todo);
 
-  /// Deletes the todo with the given id.
-  ///
-  /// If no todo with the given id exists, a [TodoNotFoundException] error is
-  /// thrown.
-  Future<void> deleteTodo(String id) => _todosApi.deleteTodo(id);
-
   /// Deletes all completed todos.
   ///
   /// Returns the number of deleted todos.

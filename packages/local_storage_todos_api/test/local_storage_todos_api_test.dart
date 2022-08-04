@@ -131,37 +131,6 @@ void main() {
       });
     });
 
-    group('deleteTodo', () {
-      test('deletes existing todos', () {
-        final newTodos = todos.sublist(1);
-
-        final subject = createSubject();
-
-        expect(subject.deleteTodo(todos[0].id), completes);
-        expect(subject.getTodos(), emits(newTodos));
-
-        verify(
-          () => plugin.setString(
-            LocalStorageTodosApi.kTodosCollectionKey,
-            json.encode(newTodos),
-          ),
-        ).called(1);
-      });
-
-      test(
-        'throws TodoNotFoundException if todo '
-        'with provided id is not found',
-        () {
-          final subject = createSubject();
-
-          expect(
-            () => subject.deleteTodo('non-existing-id'),
-            throwsA(isA<TodoNotFoundException>()),
-          );
-        },
-      );
-    });
-
     group('clearCompleted', () {
       test('deletes all completed todos', () {
         final newTodos = todos.where((todo) => !todo.isCompleted).toList();
