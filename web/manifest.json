@@ -1,6 +1,6 @@
 {
-    "name": "test_app",
-    "short_name": "test_app",
+    "name": "meta_weather_api",
+    "short_name": "meta_weather_api",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
