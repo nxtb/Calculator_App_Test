@@ -41,7 +41,7 @@ class TodosOverviewView extends StatelessWidget {
                   ..hideCurrentSnackBar()
                   ..showSnackBar(
                     SnackBar(
-                      content: Text("An error occurred while loading todos."),
+                      content: Container(),
                     ),
                   );
               }
