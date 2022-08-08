@@ -1,25 +1,30 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_todos/todos_overview/todos_overview.dart';
+import 'package:local_storage_todos_api/local_storage_todos_api.dart';
 import 'package:todos_repository/todos_repository.dart';
 
 part 'todos_overview_event.dart';
 part 'todos_overview_state.dart';
 
 class TodosOverviewBloc extends Bloc<TodosOverviewEvent, TodosOverviewState> {
-  TodosOverviewBloc({
-    required TodosRepository todosRepository,
-  })  : _todosRepository = todosRepository,
-        super(const TodosOverviewState()) {
+  TodosOverviewBloc() : super(const TodosOverviewState()) {
     on<TodosOverviewSubscriptionRequested>(_onSubscriptionRequested);
     on<TodosOverviewTodoCompletionToggled>(_onTodoCompletionToggled);
     on<TodosOverviewUndoDeletionRequested>(_onUndoDeletionRequested);
     on<TodosOverviewFilterChanged>(_onFilterChanged);
     on<TodosOverviewToggleAllRequested>(_onToggleAllRequested);
     on<TodosOverviewClearCompletedRequested>(_onClearCompletedRequested);
+    _init();
   }
 
-  final TodosRepository _todosRepository;
+  late TodosRepository _todosRepository;
+
+  void _init() async {
+    final sharedPrefs = await SharedPreferences.getInstance();
+    final api = LocalStorageTodosApi(plugin: sharedPrefs);
+    _todosRepository = TodosRepository(todosApi: api);
+  }
 
   Future<void> _onSubscriptionRequested(
     TodosOverviewSubscriptionRequested event,
